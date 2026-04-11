@@ -76,13 +76,13 @@
 
 function changeBackgroundForClass(className) {
     const colors = {
-        "Standard": "#ffffff",
         "Garbage": "#5B4B49",
         "Recycling": "#568EA3",
         "Compost": "#23967F"
         // Add your class-to-color mappings
     };
     document.body.style.backgroundColor = colors[className] || "#ffffff";
+    document.body.innerHTML = `<h1 id="resultMessage">This item goes in the ${className} bin!</h1>`;
 }
     </script>
 
