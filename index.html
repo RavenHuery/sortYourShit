@@ -13,7 +13,7 @@
      <h1 id="resultMessage">Place your items in front of the camera and we will tell you where it goes!</h1>
 
     <div>Teachable Machine Image Model</div>
-    <button type="button" onclick="init()">Start</button>
+    <button id="startButton" type="button" onclick="init()">Start</button>
     <div id="webcam-container"></div>
     <div id="label-container"></div>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
@@ -29,6 +29,11 @@
 
       // Load the image model and setup the webcam
       async function init() {
+        const startButton = document.getElementById("startButton");
+        if (startButton) {
+          startButton.style.display = "none";
+        }
+
         const modelURL = URL + "model.json";
         const metadataURL = URL + "metadata.json";
 
@@ -82,10 +87,25 @@ function changeBackgroundForClass(className) {
         // Add your class-to-color mappings
     };
     document.body.style.backgroundColor = colors[className] || "#ffffff";
-    document.body.innerHTML = `<h1 id="resultMessage">This item goes in the ${className} bin!</h1>`;
+    //document.body.innerHTML = `<h1 id="resultMessage">This item goes in the ${className} bin!</h1>`;
+    //document.body.insertAdjacentHTML("beforeend", `<h1 id="resultMessage">This item goes in the ${className} bin!</h1>`);
+
+    const existing = document.getElementById("resultMessage");
+
+if (existing) {
+  existing.textContent = `This item goes in the ${className} bin!`;
+} else {
+  document.body.insertAdjacentHTML(
+    "beforeend",
+    `<h1 id="resultMessage">This item goes in the ${className} bin!</h1>`
+  );
+}
 }
     </script>
 
+    <h4>NOTE: This is a simple prototype and may not work perfectly in all scenarios.</h4>
+    <h5>A prototype built by Raven Huery</h5>
+    <h6>Sort Your Sh!t Alpha Version 1.0 | Built with TensorFlow.js and Google Teachable Machine</h6>
   </body>
 
   
