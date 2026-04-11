@@ -60,16 +60,30 @@
         window.requestAnimationFrame(loop);
     }
 
-    // run the webcam image through the image model
     async function predict() {
-        // predict can take in an image, video or canvas html element
-        const prediction = await model.predict(webcam.canvas);
-        for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
+    const prediction = await model.predict(webcam.canvas);
+    for (let i = 0; i < maxPredictions; i++) {
+        const classPrediction =
+            prediction[i].className + ": " + prediction[i].probability.toFixed(2);
+        labelContainer.childNodes[i].innerHTML = classPrediction;
+        
+        // Change background if probability > 0.5
+        if (prediction[i].probability > 0.5) {
+            changeBackgroundForClass(prediction[i].className);
         }
     }
+}
+
+function changeBackgroundForClass(className) {
+    const colors = {
+        "Standard": "#ffffff",
+        "Garbage": "#5B4B49",
+        "Recycling": "#568EA3",
+        "Compost": "#23967F"
+        // Add your class-to-color mappings
+    };
+    document.body.style.backgroundColor = colors[className] || "#ffffff";
+}
     </script>
 
   </body>
